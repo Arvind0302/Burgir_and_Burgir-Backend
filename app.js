@@ -5,6 +5,7 @@ import session from "express-session";
 import passport from "passport";
 import cookieParser from "cookie-parser";
 import userRoute from "./routes/user.js";
+import orderRoute from "./routes/order.js";
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 const app = express();
 export default app;
@@ -18,6 +19,7 @@ app.use(session({
   saveUninitialized:false,
 }))
 app.use(cookieParser());
+app.use(express.json());
 app.use(passport.authenticate("session"));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -25,5 +27,6 @@ connectPassport();
 
 
 app.use("/api/v1", userRoute);
+app.use("/api/v1", orderRoute);
 
 app.use(errorMiddleware);
